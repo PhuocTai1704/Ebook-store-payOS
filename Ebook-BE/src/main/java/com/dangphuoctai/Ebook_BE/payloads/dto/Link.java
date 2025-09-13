@@ -7,10 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderItemDTO {
-    private Long orderItemId;
+public class Link {
+    private String title;
 
-    private BookDTO book;
-    private int price;
-
+    private String url;
 }

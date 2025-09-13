@@ -11,6 +11,7 @@ public class BookDTO {
     private Long bookId;
 
     private String title;
+    private String description;
     private String image;
 
     private int price;

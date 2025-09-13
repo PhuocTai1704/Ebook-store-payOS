@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.file.Files;
@@ -13,6 +14,8 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.UUID;
 
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,7 +30,6 @@ public class FileServiceImpl implements FileService {
 
         String originalFileName = file.getOriginalFilename();
         String randomId = UUID.randomUUID().toString();
-        @SuppressWarnings("null")
         String fileName = randomId.concat(originalFileName.substring(originalFileName.lastIndexOf('.')));
         String filePath = path + File.separator + fileName;
 
@@ -56,7 +58,7 @@ public class FileServiceImpl implements FileService {
     public String downloadImageFromUrl(String imageUrl, String folderPath) {
         try {
             // Mở kết nối và lấy Content-Type
-            URL url = new URL(imageUrl);
+            URL url = URI.create(imageUrl).toURL();
             URLConnection connection = url.openConnection();
             String contentType = connection.getContentType(); // ví dụ: "image/jpeg"
 
@@ -89,4 +91,33 @@ public class FileServiceImpl implements FileService {
         }
     }
 
+    @Override
+    public String uploadFilePDF(String path, MultipartFile file) throws IOException {
+        String originalFileName = file.getOriginalFilename();
+        String randomId = UUID.randomUUID().toString();
+        String fileName = randomId.concat(originalFileName.substring(originalFileName.lastIndexOf('.')));
+        String filePath = path + File.separator + fileName;
+
+        File folder = new File(path);
+        if (!folder.exists()) {
+            folder.mkdirs();
+        }
+
+        Files.copy(file.getInputStream(), Paths.get(filePath));
+
+        return fileName;
+
+    }
+
+    @Override
+    public Resource getFilePDF(String path, String fileName) throws FileNotFoundException {
+        String filePath = path + File.separator + fileName;
+
+        Resource resource = new FileSystemResource(filePath);
+        if (!resource.exists()) {
+            throw new FileNotFoundException("File not found: " + fileName);
+        }
+        return resource;
+
+    }
 }

@@ -1,6 +1,9 @@
 package com.dangphuoctai.Ebook_BE.controller;
 
+import java.io.File;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.dangphuoctai.Ebook_BE.payloads.dto.BookDTO;
 import com.dangphuoctai.Ebook_BE.payloads.response.BookResponse;
 import com.dangphuoctai.Ebook_BE.service.BookService;
+import com.dangphuoctai.Ebook_BE.service.FileService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -26,6 +30,9 @@ import lombok.RequiredArgsConstructor;
 public class BookController {
     @Autowired
     private BookService bookService;
+
+    @Autowired
+    private FileService fileService;
 
     @GetMapping("/books")
     public ResponseEntity<BookResponse> getAllBooks(
@@ -44,16 +51,17 @@ public class BookController {
     }
 
     @PostMapping("/books")
-    public ResponseEntity<BookDTO> createBook(@RequestParam("image") MultipartFile image,
-            @RequestParam("file") MultipartFile file,
+    public ResponseEntity<BookDTO> createBook(
+            @RequestParam(name = "fileImage") MultipartFile image,
+            @RequestParam(name = "file", required = false) MultipartFile file,
             @ModelAttribute BookDTO book) throws Exception {
         BookDTO createdBook = bookService.createBook(book, image, file);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdBook);
     }
 
-    @PutMapping("/books/{id}")
-    public ResponseEntity<BookDTO> updateBook(@RequestParam("image") MultipartFile image,
-            @RequestParam("file") MultipartFile file,
+    @PutMapping("/books")
+    public ResponseEntity<BookDTO> updateBook(@RequestParam(name = "fileImage", required = false) MultipartFile image,
+            @RequestParam(name = "file", required = false) MultipartFile file,
             @ModelAttribute BookDTO book) throws Exception {
         BookDTO updatedBook = bookService.updateBook(book, image, file);
         return ResponseEntity.ok(updatedBook);
@@ -63,6 +71,15 @@ public class BookController {
     public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
         bookService.deleteBook(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/books/download/{fileName}")
+    public ResponseEntity<Resource> downloadBookFile(@PathVariable String fileName) throws Exception {
+        Resource fileData = bookService.downloadBookFile(fileName);
+
+        return ResponseEntity.ok()
+                .header("Content-Disposition", "attachment; filename=\"" + fileData.getFilename() + "\"")
+                .body(fileData);
     }
 
 }

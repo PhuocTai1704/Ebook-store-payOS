@@ -3,7 +3,6 @@ package com.dangphuoctai.Ebook_BE.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -12,13 +11,15 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-@Table(name = "products")
+@Table(name = "books")
 @AllArgsConstructor
 @NoArgsConstructor
 public class Book {
@@ -30,17 +31,22 @@ public class Book {
     private String title;
     @Column(nullable = false)
     private String image;
+    @Column(nullable = false)
+    private String description;
 
+    @Min(0)
     @Column(nullable = false)
     private int price;
+    @Min(0)
+    @Max(100)
     @Column(nullable = false)
     private int discount;
 
     @Column(nullable = false, unique = true)
     private String fileUrl;
-    @Column(nullable = false)
+    // @Column(nullable = false)
     private String fileFormat;
-    @Column(nullable = false)
+    // @Column(nullable = false)
     private int fileSize;
 
     @OneToMany(mappedBy = "book", fetch = FetchType.LAZY)
