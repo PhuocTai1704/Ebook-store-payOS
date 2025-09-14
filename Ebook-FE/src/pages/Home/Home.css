@@ -1,0 +1,518 @@
+/* Custom styles to enhance Bootstrap */
+.hover-opacity-100:hover {
+  opacity: 1 !important;
+}
+
+.transition-opacity {
+  transition: opacity 0.3s ease;
+}
+
+.object-fit-cover {
+  object-fit: cover;
+}
+
+/* Custom card hover effect */
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Custom button styles */
+.btn {
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+/* Custom input styles */
+.form-control:focus {
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+}
+
+/* Custom badge styles */
+.badge {
+  font-size: 0.75rem;
+  padding: 0.5em 0.75em;
+}
+
+/* Enhanced discount badge on image */
+.badge.bg-danger {
+  background: linear-gradient(135deg, #dc3545, #c82333) !important;
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 8px 12px;
+  border-radius: 20px;
+  box-shadow: 0 2px 8px rgba(220, 53, 69, 0.3);
+}
+
+/* Simplified price styling - only final price */
+.final-price {
+  color: #198754;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.2;
+  background: linear-gradient(135deg, #198754, #20c997);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Header Styles */
+header {
+  z-index: 1030;
+}
+
+.navbar-brand {
+  font-size: 1.5rem !important;
+}
+
+/* Cart Dropdown Styles */
+.cart-dropdown {
+  z-index: 1050;
+  border: 1px solid #dee2e6 !important;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+  border-radius: 12px !important;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.cart-item:last-child {
+  border-bottom: none !important;
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.cart-items::-webkit-scrollbar {
+  width: 6px;
+}
+
+.cart-items::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.cart-items::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.cart-items::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Cart Button Styles */
+.btn-outline-primary {
+  border-radius: 25px;
+  padding: 8px 20px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-outline-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(13, 110, 253, 0.3);
+}
+
+/* Badge on cart button */
+.badge {
+  font-size: 0.7rem;
+  padding: 0.25em 0.5em;
+  border-radius: 50%;
+  min-width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Quantity buttons */
+.btn-group-sm .btn {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .final-price {
+    font-size: 1.2rem;
+  }
+
+  .cart-dropdown {
+    min-width: 300px !important;
+    max-width: 320px !important;
+  }
+
+  .navbar-brand {
+    font-size: 1.25rem !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .final-price {
+    font-size: 1.2rem;
+  }
+
+  .btn {
+    font-size: 0.9rem;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .cart-dropdown {
+    min-width: 280px !important;
+    max-width: 300px !important;
+  }
+
+  .cart-item .row .col-3 {
+    flex: 0 0 25%;
+    max-width: 25%;
+  }
+
+  .cart-item .row .col-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+}
+
+/* Loading spinner customization */
+.spinner-border {
+  width: 3rem;
+  height: 3rem;
+}
+
+/* Alert customization */
+.alert {
+  border-radius: 12px;
+  border: none;
+}
+
+/* Footer links */
+footer a {
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+footer a:hover {
+  color: #0d6efd !important;
+}
+
+/* Hero section enhancements */
+.bg-primary {
+  background: linear-gradient(135deg, #0d6efd 0%, #6610f2 100%) !important;
+}
+
+/* Custom spacing */
+.py-5 {
+  padding-top: 4rem !important;
+  padding-bottom: 4rem !important;
+}
+
+/* Search section */
+.bg-light {
+  background-color: #f8f9fa !important;
+}
+
+/* Newsletter section */
+.bg-dark {
+  background: linear-gradient(135deg, #212529 0%, #495057 100%) !important;
+}
+
+/* Enhanced card body layout */
+.card-body {
+  padding: 1.25rem;
+}
+
+.card-title {
+  font-size: 1.1rem;
+  margin-bottom: 0.75rem;
+}
+
+.card-text {
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+/* Button enhancements */
+.btn-primary {
+  background: linear-gradient(135deg, #0d6efd, #6610f2);
+  border: none;
+  font-weight: 600;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #0b5ed7, #5a0fc8);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(13, 110, 253, 0.3);
+}
+
+/* Sticky header */
+.sticky-top {
+  position: sticky;
+  top: 0;
+  z-index: 1020;
+}
+
+/* Home Page Specific Styles */
+.home-container {
+  background-color: #ffffff;
+  min-height: 100vh;
+}
+
+/* Container và layout rộng hơn cho Home */
+.home-container .container {
+  max-width: 1400px !important;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.home-container .container-fluid {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+/* Responsive breakpoints cho container rộng hơn */
+@media (min-width: 1400px) {
+  .home-container .container {
+    max-width: 1600px !important;
+  }
+}
+
+@media (min-width: 1200px) {
+  .home-container .container {
+    max-width: 1400px !important;
+  }
+}
+
+@media (min-width: 992px) {
+  .home-container .container {
+    max-width: 1200px !important;
+  }
+}
+
+/* Hero section rộng hơn */
+.home-hero-section {
+  padding: 4rem 0;
+}
+
+/* Books section với spacing tốt hơn */
+.home-books-section {
+  padding: 3rem 0;
+}
+
+/* Grid layout tối ưu cho books */
+.home-books-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  padding: 0 1rem;
+}
+
+/* Responsive grid */
+@media (min-width: 1400px) {
+  .home-books-grid {
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2.5rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .home-books-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  .home-books-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .home-books-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 767px) {
+  .home-books-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .home-container .container-fluid {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
+
+/* Card styling rộng hơn cho Home */
+.home-book-card {
+  margin-bottom: 2rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.home-book-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* Card image container cho Home */
+.home-book-image-container {
+  height: 350px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.5rem 0.5rem 0 0;
+}
+
+/* Card body padding cho Home */
+.home-card-body {
+  padding: 1.5rem;
+}
+
+/* Price và button layout cho Home */
+.home-price-button-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  gap: 1rem;
+}
+
+/* Button styling cho Home */
+.home-btn-add-cart {
+  min-width: 140px;
+  padding: 0.75rem 1rem;
+  font-weight: 500;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.home-btn-add-cart:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(13, 110, 253, 0.3);
+}
+
+/* Discount badge cho Home */
+.home-discount-badge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background: linear-gradient(45deg, #dc3545, #c82333);
+  color: white;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  box-shadow: 0 2px 8px rgba(220, 53, 69, 0.3);
+}
+
+/* Book title cho Home */
+.home-book-title {
+  font-size: 1.25rem;
+  line-height: 1.4;
+  margin-bottom: 0.75rem;
+  color: #2c3e50;
+}
+
+/* Book description cho Home */
+.home-book-description {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #6c757d;
+  margin-bottom: 1rem;
+}
+
+/* Price styling cho Home */
+.home-final-price {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #28a745;
+}
+
+/* Pagination spacing cho Home */
+.home-pagination-container {
+  margin-top: 3rem;
+  padding: 0 2rem;
+}
+
+/* Footer rộng hơn cho Home */
+.home-footer {
+  padding: 3rem 0 2rem;
+}
+
+/* Loading và error states cho Home */
+.home-loading-container {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.home-error-container {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Empty state cho Home */
+.home-empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: #6c757d;
+}
+
+.home-empty-state i {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+/* Override Bootstrap container max-width cho Home */
+@media (min-width: 576px) {
+  .home-container .container {
+    max-width: 1400px !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .home-container .container {
+    max-width: 1400px !important;
+  }
+}
+
+@media (min-width: 992px) {
+  .home-container .container {
+    max-width: 1400px !important;
+  }
+}
+
+@media (min-width: 1200px) {
+  .home-container .container {
+    max-width: 1600px !important;
+  }
+}
+
+@media (min-width: 1400px) {
+  .home-container .container {
+    max-width: 1800px !important;
+  }
+}
