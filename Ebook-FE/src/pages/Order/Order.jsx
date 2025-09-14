@@ -3,7 +3,7 @@ import { useCartList } from "../../context/Context";
 import { Link, useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Order.css";
-import { getBookById, createOrder } from "../../services/api";
+import { getBookById, createOrder, IMG_URL } from "../../services/api";
 
 const Order = () => {
   const navigate = useNavigate();
@@ -267,7 +267,7 @@ const Order = () => {
                       <div key={item.bookId} className="order-item">
                         <div className="d-flex">
                           <img
-                            src={item.image}
+                            src={IMG_URL + item.image}
                             alt={item.title}
                             className="order-item-image"
                           />

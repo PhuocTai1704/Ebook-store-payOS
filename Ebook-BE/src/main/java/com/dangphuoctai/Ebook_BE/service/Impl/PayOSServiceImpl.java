@@ -2,6 +2,7 @@ package com.dangphuoctai.Ebook_BE.service.Impl;
 
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -11,10 +12,16 @@ import com.dangphuoctai.Ebook_BE.entity.Order;
 import com.dangphuoctai.Ebook_BE.enums.OrderStatus;
 import com.dangphuoctai.Ebook_BE.exeptions.APIException;
 import com.dangphuoctai.Ebook_BE.exeptions.ResourceNotFoundException;
+import com.dangphuoctai.Ebook_BE.payloads.EmailDetails;
+import com.dangphuoctai.Ebook_BE.payloads.dto.Link;
+import com.dangphuoctai.Ebook_BE.payloads.dto.OrderDTO;
 import com.dangphuoctai.Ebook_BE.payloads.dto.OrderItemDTO;
 import com.dangphuoctai.Ebook_BE.repository.OrderRepo;
+import com.dangphuoctai.Ebook_BE.service.EmailService;
 import com.dangphuoctai.Ebook_BE.service.PayOSService;
+import com.dangphuoctai.Ebook_BE.utils.Email;
 
+import jakarta.transaction.Transactional;
 import vn.payos.PayOS;
 import vn.payos.type.CheckoutResponseData;
 import vn.payos.type.ItemData;
@@ -32,6 +39,15 @@ public class PayOSServiceImpl implements PayOSService {
 
     @Autowired
     private OrderRepo orderRepo;
+
+    @Autowired
+    private ModelMapper modelMapper;
+
+    @Autowired
+    private EmailService emailService;
+
+    @Value("${server.fileUrl}")
+    private String fileUrl;
 
     @Value("${payos.baseReturnUrl}")
     private String baseReturnUrl;
@@ -72,6 +88,7 @@ public class PayOSServiceImpl implements PayOSService {
         }
     }
 
+    @Transactional
     @Override
     public void verifiedPaymentWithPayOS(Webhook webhook) {
         try {
@@ -85,11 +102,27 @@ public class PayOSServiceImpl implements PayOSService {
                 } else {
                     order.setStatus(OrderStatus.COMPLETED);
                     orderRepo.save(order);
+                    OrderDTO orderDTO = modelMapper.map(order, OrderDTO.class);
+                    List<Link> links = order.getOrderItems().stream()
+                            .map(item -> {
+                                Link link = new Link();
+                                link.setTitle(item.getBook().getTitle());
+                                link.setUrl(fileUrl + item.getBook().getFileUrl());
+                                return link;
+                            })
+                            .toList();
+                    String emailBody = Email.getEmailBody(orderDTO, links);
+                    EmailDetails emailDetails = new EmailDetails();
+                    emailDetails.setRecipient(order.getEmail());
+                    emailDetails.setMsgBody(emailBody);
+                    emailDetails.setSubject("Thông tin đơn hàng #" + order.getOrderId() + " tại Ebook Store");
+                    String resultSendEmail = emailService.sendMailWithAttachment(emailDetails);
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
-            throw new APIException("Xác thực thanh toán với PayOS thất bại: " + e.getMessage());
+            // throw new APIException("Xác thực thanh toán với PayOS thất bại: " +
+            // e.getMessage());
         }
     }
 

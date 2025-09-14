@@ -3,7 +3,7 @@ import { useCartList } from "../../context/Context";
 import { Link, useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Cart.css";
-import { getBookById } from "../../services/api";
+import { getBookById, IMG_URL } from "../../services/api";
 
 const Cart = () => {
   const navigate = useNavigate();
@@ -109,7 +109,7 @@ const Cart = () => {
                   <div className="row align-items-center">
                     <div className="col-md-2">
                       <img
-                        src={item.image}
+                        src={IMG_URL + item.image}
                         alt={item.title}
                         className="cart-item-image"
                       />

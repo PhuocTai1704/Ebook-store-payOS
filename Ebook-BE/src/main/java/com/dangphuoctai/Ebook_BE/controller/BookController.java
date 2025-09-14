@@ -1,10 +1,15 @@
 package com.dangphuoctai.Ebook_BE.controller;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -73,6 +78,16 @@ public class BookController {
     public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
         bookService.deleteBook(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/books/image/{imageName}")
+    public ResponseEntity<InputStreamResource> getImage(@PathVariable String imageName) throws FileNotFoundException {
+        InputStream imageStream = bookService.getImage(imageName);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.IMAGE_PNG);
+        headers.setContentDispositionFormData("inline", imageName);
+
+        return new ResponseEntity<>(new InputStreamResource(imageStream), headers, HttpStatus.OK);
     }
 
     @GetMapping("/books/download/{fileName}")

@@ -1,6 +1,8 @@
 package com.dangphuoctai.Ebook_BE.service.Impl;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -110,6 +112,11 @@ public class BookServiceImpl implements BookService {
     @Override
     public void deleteBook(Long bookId) {
 
+    }
+
+    @Override
+    public InputStream getImage(String imageName) throws FileNotFoundException {
+        return fileService.getResource(path, imageName);
     }
 
     @Override

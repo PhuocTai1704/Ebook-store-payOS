@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getBooks } from "../../services/api";
+import { getBooks, IMG_URL } from "../../services/api";
 import { useCartList } from "../../context/Context";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -318,7 +318,7 @@ const Home = () => {
                   <div className="card h-100 shadow-sm border-0">
                     <div className="home-book-image-container">
                       <img
-                        src={book.image}
+                        src={IMG_URL + book.image}
                         className="card-img-top h-100 object-fit-cover"
                         alt={book.title}
                         onError={(e) => {

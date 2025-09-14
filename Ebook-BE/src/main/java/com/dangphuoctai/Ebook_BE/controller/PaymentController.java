@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dangphuoctai.Ebook_BE.service.PayOSService;
 
-@CrossOrigin(origins = "*")
+import jakarta.servlet.http.HttpServletRequest;
+
+// @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
@@ -24,6 +26,7 @@ public class PaymentController {
 
     @PostMapping("/payments/webhook")
     public ResponseEntity<String> paymentPayOS(@RequestBody Webhook body) {
+
         payOSService.verifiedPaymentWithPayOS(body);
 
         return ResponseEntity.ok("Received webhook");
