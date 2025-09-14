@@ -33,9 +33,6 @@ public class OrderItem {
     private Book book;
 
     @Column(nullable = false)
-    private int quantity;
-
-    @Column(nullable = false)
     @Min(0)
     private int price;
 

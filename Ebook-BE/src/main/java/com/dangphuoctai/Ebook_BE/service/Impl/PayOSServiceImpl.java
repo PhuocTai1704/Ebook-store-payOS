@@ -3,6 +3,7 @@ package com.dangphuoctai.Ebook_BE.service.Impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
@@ -32,6 +33,11 @@ public class PayOSServiceImpl implements PayOSService {
     @Autowired
     private OrderRepo orderRepo;
 
+    @Value("${payos.baseReturnUrl}")
+    private String baseReturnUrl;
+    @Value("${payos.baseCancelUrl}")
+    private String baseCancelUrl;
+
     @Override
     public String createPayment(String webhookUrl, Long orderId, int amount, List<OrderItemDTO> orderItems) {
         try {
@@ -43,8 +49,8 @@ public class PayOSServiceImpl implements PayOSService {
                             .build())
                     .toList();
             PaymentData paymentData = PaymentData.builder().orderCode(orderId).amount(amount)
-                    .description("Thanh toán đơn hàng Ebook").returnUrl(webhookUrl + "/success")
-                    .cancelUrl(webhookUrl + "/cancel")
+                    .description("Thanh toán đơn hàng Ebook").returnUrl(webhookUrl + baseReturnUrl)
+                    .cancelUrl(webhookUrl + baseCancelUrl)
                     .items(items).build();
             CheckoutResponseData result = payOS.createPaymentLink(paymentData);
 

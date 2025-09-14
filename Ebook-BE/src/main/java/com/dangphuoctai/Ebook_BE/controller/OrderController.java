@@ -8,17 +8,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dangphuoctai.Ebook_BE.payloads.dto.Link;
+import com.dangphuoctai.Ebook_BE.payloads.request.RequestOrder;
 import com.dangphuoctai.Ebook_BE.payloads.response.OrderInfo;
 import com.dangphuoctai.Ebook_BE.service.OrderService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
@@ -27,8 +30,9 @@ public class OrderController {
     private OrderService orderService;
 
     @PostMapping("/orders")
-    public ResponseEntity<OrderInfo> postMethodName(HttpServletRequest request, @RequestBody List<Long> bookIds) {
-        OrderInfo result = orderService.createOrder(request, bookIds);
+    public ResponseEntity<OrderInfo> postMethodName(HttpServletRequest request,
+            @RequestBody RequestOrder orderRequest) {
+        OrderInfo result = orderService.createOrder(request, orderRequest);
 
         return ResponseEntity.ok(result);
     }

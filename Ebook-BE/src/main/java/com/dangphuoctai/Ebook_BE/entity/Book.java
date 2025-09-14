@@ -44,10 +44,6 @@ public class Book {
 
     @Column(nullable = false, unique = true)
     private String fileUrl;
-    // @Column(nullable = false)
-    private String fileFormat;
-    // @Column(nullable = false)
-    private int fileSize;
 
     @OneToMany(mappedBy = "book", fetch = FetchType.LAZY)
     private List<OrderItem> orderItems = new ArrayList<>();

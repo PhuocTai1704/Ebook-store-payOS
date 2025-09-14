@@ -16,6 +16,7 @@ import com.dangphuoctai.Ebook_BE.exeptions.APIException;
 import com.dangphuoctai.Ebook_BE.exeptions.ResourceNotFoundException;
 import com.dangphuoctai.Ebook_BE.payloads.dto.Link;
 import com.dangphuoctai.Ebook_BE.payloads.dto.OrderItemDTO;
+import com.dangphuoctai.Ebook_BE.payloads.request.RequestOrder;
 import com.dangphuoctai.Ebook_BE.payloads.response.OrderInfo;
 import com.dangphuoctai.Ebook_BE.repository.BookRepo;
 import com.dangphuoctai.Ebook_BE.repository.OrderRepo;
@@ -24,7 +25,6 @@ import com.dangphuoctai.Ebook_BE.service.PayOSService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
-import vn.payos.type.PaymentLinkData;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -41,14 +41,12 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private ModelMapper modelMapper;
 
-    // @Value("${project.basePath}")
-    // private String basePath;
-
     private final String urlDownload = "/api/books/download/";
 
     @Override
-    public OrderInfo createOrder(HttpServletRequest request, List<Long> bookIds) {
+    public OrderInfo createOrder(HttpServletRequest request, RequestOrder orderRequest) {
         Order order = new Order();
+        List<Long> bookIds = orderRequest.getBookIds();
         List<Book> books = bookRepo.findAllById(bookIds);
         if (books.size() != bookIds.size()) {
             throw new APIException("Không tìm thấy một số sách");
@@ -61,6 +59,7 @@ public class OrderServiceImpl implements OrderService {
             return item;
         }).toList();
         int totalAmount = orderItems.stream().mapToInt(OrderItem::getPrice).sum();
+        order.setEmail(orderRequest.getEmail());
         order.setOrderItems(orderItems);
         order.setTotalAmount(totalAmount);
         order.setStatus(OrderStatus.PENDING);
@@ -69,7 +68,7 @@ public class OrderServiceImpl implements OrderService {
         List<OrderItemDTO> orderItemDTOs = orderItems.stream()
                 .map(item -> modelMapper.map(item, OrderItemDTO.class))
                 .toList();
-        String linkPayment = payOSService.createPayment(getBaseUrl(request), order.getOrderId(), totalAmount,
+        String linkPayment = payOSService.createPayment(getBaseUrlRequest(request), order.getOrderId(), totalAmount,
                 orderItemDTOs);
 
         OrderInfo orderInfo = new OrderInfo();
@@ -105,17 +104,9 @@ public class OrderServiceImpl implements OrderService {
         return links;
     }
 
-    private String getBaseUrl(HttpServletRequest request) {
-        String scheme = request.getScheme();
-        String serverName = request.getServerName();
-        int serverPort = request.getServerPort();
-        String contextPath = request.getContextPath();
+    private String getBaseUrlRequest(HttpServletRequest request) {
+        System.out.println(request.getHeader("Referer").toString());
 
-        String url = scheme + "://" + serverName;
-        if ((scheme.equals("http") && serverPort != 80) || (scheme.equals("https") && serverPort != 443)) {
-            url += ":" + serverPort;
-        }
-        url += contextPath;
-        return url;
+        return request.getHeader("Origin").toString();
     }
 }

@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class OrderDTO {
     private Long orderId;
+    private String email;
 
     private List<OrderItemDTO> orderItems;
     private int totalAmount;

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -24,6 +25,7 @@ import com.dangphuoctai.Ebook_BE.service.FileService;
 
 import lombok.RequiredArgsConstructor;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
